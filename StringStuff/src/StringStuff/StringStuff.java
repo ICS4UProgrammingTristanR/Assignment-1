@@ -36,6 +36,9 @@ public char[] toCharArray() {
 
         // This will reference one line at a time
         String line = null;	
+        int run = 0;
+        int maxRun;
+        String maxRunLetter;
 		
         try {
             // FileReader reads text files in the default encoding.
@@ -68,8 +71,9 @@ public char[] toCharArray() {
         char[] ch = fileName.toCharArray();
         
         for (int count = 0; count < ch.length; count++) ch[count] = count;
-       
+        
         for (int e : ch) 
+        	
         System.out.println();
         
         
