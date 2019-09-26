@@ -19,11 +19,15 @@ import javax.xml.stream.events.Namespace;
 public class StringStuff {
 	// The name of the file to open.
 	public static String fileName = "input.txt";	
+    public static int run ;
+    public static int maxRun;
+    public static char maxRunLetter;
+    public static String characters;
 	
 public char[] toCharArray() {  
 	    // Cannot use Arrays.copyOf because of class initialization order issues  
-	    char[] result = new char[fileName.length()];  
-	    System.arraycopy(fileName, 0, result, 0, fileName.length());  
+	    char[] result = new char[characters.length()];  
+	    System.arraycopy(characters, 0, result, 0, characters.length());  
 	    return result;  
 	}  
 			
@@ -35,10 +39,9 @@ public char[] toCharArray() {
 		
 
         // This will reference one line at a time
-        String line = null;	
-        int run = 0;
-        int maxRun;
-        String maxRunLetter;
+         String line = null;	
+         //String[] characters = line;
+    
 		
         try {
             // FileReader reads text files in the default encoding.
@@ -49,7 +52,9 @@ public char[] toCharArray() {
                 new BufferedReader(fileReader);
 
             while((line = bufferedReader.readLine()) != null) {
-                System.out.println(line);
+                
+            	System.out.println(line);
+            	characters = line;
             }   
 
             // Always close files.
@@ -68,43 +73,48 @@ public char[] toCharArray() {
             // ex.printStackTrace();
         }
         
-        char[] ch = fileName.toCharArray();
+        char[] ch = characters.toCharArray();
+        int count;
+        int countHigher;
         
-        for (int count = 0; count < ch.length; count++) ch[count] = count;
         
-        for (int e : ch) 
+        for ( count = 0; count < ch.length; count++) 
+        {
+        for ( countHigher = count + 1; countHigher < ch.length;countHigher++) 
+        { 
+        	if (ch[count] == ch[countHigher]) {
+        		
+        		run ++;
+        	}
+        	if (run > maxRun) {
+        	maxRun = run + 1;
+        	maxRunLetter = ch[ count ];
+
+        	}
+        	 if ( ch[count] != ch[countHigher] ) 
+        	{
+        		run = 0;
+        		
+        	}
         	
-        System.out.println();
-        
-        
+        }
+        	
 
-        
-        
-        //Map<String, Integer> nameAndCount = new HashMap<>();
 
-  
-		// build hash table with count
-       // for (String name : ch) {
-           // Integer count = nameAndCount.get(name);
-            //if (count == null) {
-               // nameAndCount.put(name, 1);
-            //} else {
-               // nameAndCount.put(name, ++count);
-            //}
-       // }
+	}
+ 		System.out.println("The max run is:" + maxRun + "," + maxRunLetter);
 
-        // Print duplicate elements from array in Java
-        //Set<Entry<String, Integer>> entrySet = nameAndCount.entrySet();
-        //for (Entry<String, Integer> entry : entrySet) {
-            //if (entry.getValue() > 1) {
-               // System.out.printf("duplicate element '%s' and count '%d' :", entry.getKey(), entry.getValue());
-         //   }
-      //  }
-        
-        
-        
-        
-        
-        
-    }
+
+
 }
+	}
+        
+
+        
+        
+       
+        
+        
+        
+        
+       
