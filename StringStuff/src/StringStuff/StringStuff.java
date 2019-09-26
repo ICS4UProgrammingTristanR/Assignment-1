@@ -19,6 +19,8 @@ import javax.xml.stream.events.Namespace;
 public class StringStuff {
 	// The name of the file to open.
 	public static String fileName = "input.txt";	
+	public static String otherFileName = "output.txt";	
+
     public static int run ;
     public static int maxRun;
     public static char maxRunLetter;
@@ -46,10 +48,13 @@ public char[] toCharArray() {
         try {
             // FileReader reads text files in the default encoding.
             FileReader fileReader = new FileReader(fileName);
+          
 
             // Always wrap FileReader in BufferedReader.
             BufferedReader bufferedReader = 
                 new BufferedReader(fileReader);
+            
+        
 
             while((line = bufferedReader.readLine()) != null) {
                 
@@ -73,11 +78,14 @@ public char[] toCharArray() {
             // ex.printStackTrace();
         }
         
+        // converts the string characters to an array 
         char[] ch = characters.toCharArray();
+        // variables to assess the contents of the array
         int count;
         int countHigher;
         
         
+        // creates a loop which evaluates the contents of the array
         for ( count = 0; count < ch.length; count++) 
         {
         for ( countHigher = count + 1; countHigher < ch.length;countHigher++) 
@@ -86,6 +94,7 @@ public char[] toCharArray() {
         		
         		run ++;
         	}
+        	// if the current run is higher than that of the previous one update the max run
         	if (run > maxRun) {
         	maxRun = run + 1;
         	maxRunLetter = ch[ count ];
@@ -103,7 +112,31 @@ public char[] toCharArray() {
 
 	}
  		System.out.println("The max run is:" + maxRun + "," + maxRunLetter);
+ 		  try {
+ 	            // Assume default encoding.
+ 	            FileWriter fileWriter =
+ 	                new FileWriter(otherFileName);
 
+ 	            // Always wrap FileWriter in BufferedWriter.
+ 	            BufferedWriter bufferedWriter =
+ 	                new BufferedWriter(fileWriter);
+
+ 	            // Note that write() does not automatically
+ 	            // append a newline character.
+ 	            bufferedWriter.write("The max run is:" + maxRun + "," + maxRunLetter);
+ 	            ProcessBuilder pb = new ProcessBuilder("Notepad.exe","output.txt");
+ 	            pb.start();
+ 	   
+ 	            // Always close files.
+ 	            bufferedWriter.close();
+ 	        }
+ 	        catch(IOException ex) {
+ 	            System.out.println(
+ 	                "Error writing to file '"
+ 	                + fileName + "'");
+ 	            // Or we could just do this:
+ 	            // ex.printStackTrace();
+ 	        }
 
 
 }
